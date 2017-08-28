@@ -25,3 +25,12 @@ export function fetchStudents() {
       })
   }
 }
+
+export const deleteStudent = student => ({type: 'DELETE_STUDENT', student})
+
+export function deleteStudent(studentId) {
+  return function thunk(dispatch) {
+    return axios.delete(`/api/students/${studentId}`)
+    .then(res => res.sendStatus(204))
+  }
+}

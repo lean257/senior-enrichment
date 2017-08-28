@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import store from '../store'
 import Student from './Student'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
 
 function StudentsList (props) {
   const students = props.students
@@ -23,5 +24,5 @@ function mapStateToProps(state) {
   }
 }
 
-const AllStudentsContainer = connect(mapStateToProps)(StudentsList)
+const AllStudentsContainer = withRouter(connect(mapStateToProps)(StudentsList))
 export default AllStudentsContainer

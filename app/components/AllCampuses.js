@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
 
 function AllCampuses (props) {
   const campuses = props.campuses
@@ -34,5 +35,5 @@ function mapStateToProps(state) {
   }
 }
 
-const AllCampusesContainer = connect(mapStateToProps)(AllCampuses)
+const AllCampusesContainer = withRouter(connect(mapStateToProps)(AllCampuses))
 export default AllCampusesContainer

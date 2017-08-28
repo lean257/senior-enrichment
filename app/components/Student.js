@@ -3,7 +3,7 @@ import React from 'react';
 export default function Student (props) {
 
   const student = props.student
-
+  console.log('props in student', props)
   return (
     <ul>
       <li>

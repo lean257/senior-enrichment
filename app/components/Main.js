@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AllCampuses from './AllCampuses'
 import Students from './Students'
+import SingleStudent from './SingleStudent'
 import StudentsList from './StudentsList'
 import NavBar from './NavBar'
 import store from '../store'
@@ -22,7 +23,8 @@ export default class Main extends Component {
           <main>
             <Switch>
               <Route exact path="/" component={AllCampuses} />
-              <Route path="/students" component={Students} />
+              <Route exact path="/students" component={Students} />
+              <Route path="/students/:studentId" component={SingleStudent} />
               <Route path="/campuses/:campusId" component={StudentsList} />
             </Switch>
           </main>
