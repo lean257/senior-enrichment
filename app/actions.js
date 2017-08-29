@@ -48,5 +48,6 @@ export function postStudent(student){
     .then(newStudent => {
       dispatch(getStudent(newStudent))
     })
+    .catch(console.error)
   }
 }

@@ -9,6 +9,7 @@ module.exports = db.define('campus', {
     allowNull: false
   },
   image: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'https://image.flaticon.com/sprites/new_packs/201550-education.png'
   }
 })

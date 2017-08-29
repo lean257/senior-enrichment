@@ -29,7 +29,7 @@ function Students (props) {
           <Link
             className="thumbnail"
             to={`/campuses/${student.campusId}`}>
-            {campuses.filter(campus => campus.id === student.campusId)[0].name}
+            {campuses && campuses.filter(campus => campus.id === student.campusId)[0].name}
           </Link>
         </td>
         <td className="delete"
