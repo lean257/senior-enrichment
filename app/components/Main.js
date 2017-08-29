@@ -3,6 +3,7 @@ import AllCampuses from './AllCampuses'
 import Students from './Students'
 import SingleStudent from './SingleStudent'
 import StudentsList from './StudentsList'
+import NewStudentEntry from './NewStudentEntry'
 import NavBar from './NavBar'
 import store from '../store'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
@@ -26,6 +27,7 @@ export default class Main extends Component {
               <Route exact path="/students" component={Students} />
               <Route path="/students/:studentId" component={SingleStudent} />
               <Route path="/campuses/:campusId" component={StudentsList} />
+              <Route path="/new-student" component={NewStudentEntry} />
             </Switch>
           </main>
         </div>

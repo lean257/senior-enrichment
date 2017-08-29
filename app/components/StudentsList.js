@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import store from '../store'
-import Student from './Student'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom'
 
 function StudentsList (props) {
   const students = props.students
@@ -10,11 +10,25 @@ function StudentsList (props) {
   const filteredStudents = students.filter(students => students.campusId === campusId);
 
   return (
-    <div>
-      <ul className="media-list">
-        { filteredStudents.map(student => <Student student={student} key={student.id} />) }
-      </ul>
-    </div>
+    <table className="table">
+      <thead>
+      <tr>
+      <th>#</th>
+      <th>Name</th>
+      </tr>
+      </thead>
+      {
+        filteredStudents && filteredStudents.map(student => (
+          <tbody key={student.id}>
+            <tr>
+              <th scope="row">{filteredStudents.indexOf(student)+1}</th>
+              <td><Link className="thumbnail" to={`/students/${student.id}`}>{student.name}</Link>
+              </td>
+            </tr>
+          </tbody>
+        ))
+      }
+    </table>
   )
 }
 

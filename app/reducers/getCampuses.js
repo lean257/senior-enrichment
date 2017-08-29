@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const GET_CAMPUSES = 'GET_CAMPUSES'
 const GET_CAMPUS = 'GET_CAMPUS'
 

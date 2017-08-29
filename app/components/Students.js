@@ -2,11 +2,13 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {withRouter} from 'react-router'
+import {deleteStudent} from '../actions'
 
 function Students (props) {
 
-  const {students, campuses} = this.props
+  const {students, campuses} = props
   return(
+    <div>
     <table className="table">
     <thead>
     <tr>
@@ -20,16 +22,26 @@ function Students (props) {
       students && students.map(student => (
         <tbody key={student.id}>
         <tr>
-        <th scope="row">{student.id}</th>
-        <th><Link className="thumbnail" to={`/students/${student.id}`}>{student.name}</Link>
-        </th>
-        <th>{campuses.filter(campus => campus.id === student.campusId)[0].name}</th>
-        <th onClick={this.props.handleDelete}>X</th>
+        <th scope="row">{students.indexOf(student)+1}</th>
+        <td><Link className="thumbnail" to={`/students/${student.id}`}>{student.name}</Link>
+        </td>
+        <td>
+          <Link
+            className="thumbnail"
+            to={`/campuses/${student.campusId}`}>
+            {campuses.filter(campus => campus.id === student.campusId)[0].name}
+          </Link>
+        </td>
+        <td className="delete"
+          value={student.id}
+          onClick={props.handleDelete}>X</td>
         </tr>
         </tbody>
       ))
     }
     </table>
+    <div><Link to='/new-student'>Add a New Student</Link></div>
+  </div>
   )
 }
 
@@ -42,8 +54,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch, ownProps){
   return {
-    handleDelete(){
-      dispatch(deleteStudent(ownProps.match.params.studentId))
+    handleDelete(evt){
+      dispatch(deleteStudent(Number(evt.target.getAttribute('value'))))
     }
   }
 }
