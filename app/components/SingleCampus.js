@@ -4,12 +4,13 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 
-function StudentsList (props) {
+function SingleCampus (props) {
   const students = props.students
   const campusId = Number(props.match.params.campusId)
   const filteredStudents = students.filter(students => students.campusId === campusId);
 
   return (
+    <div>
     <table className="table">
       <thead>
       <tr>
@@ -29,6 +30,8 @@ function StudentsList (props) {
         ))
       }
     </table>
+    <button><Link to='/new-student'>Add Student</Link></button>
+    </div>
   )
 }
 
@@ -38,5 +41,5 @@ function mapStateToProps(state) {
   }
 }
 
-const AllStudentsContainer = withRouter(connect(mapStateToProps)(StudentsList))
+const AllStudentsContainer = withRouter(connect(mapStateToProps)(SingleCampus))
 export default AllStudentsContainer

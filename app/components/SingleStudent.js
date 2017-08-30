@@ -1,28 +1,34 @@
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
-import React from 'react'
-import Student from './Student'
+import React, {Component} from 'react'
 import {withRouter} from 'react-router'
 
-function SingleStudent (props) {
-  const students = props.students
-  const studentId = Number(props.match.params.studentId)
-  const filteredStudent = students.filter(student => student.id === studentId);
+class SingleStudent extends Component {
+  constructor(props){
+    super(props)
+  }
+  render() {
+    const students = this.props.students
+    const studentId = Number(this.props.match.params.studentId)
+    const filteredStudent = students.filter(student => student.id === studentId)[0]
 
-  return (
-    <div>
-      <ul className="media-list">
-        <Student student={filteredStudent[0]} key={studentId} />
-      </ul>
+    return (
+      <div>
+        <img className="media-object" src={filteredStudent.image} alt="image" height="92" width="92"/> <br />
+        { filteredStudent.name } <br />
+      { filteredStudent.email }
     </div>
-  )
+    )
+  }
 }
 
 function mapStateToProps(state) {
+  console.log('state inside SingleStudent', state)
   return {
     students: state.students
   }
 }
+const mapDispatch = null;
 
-const SingleStudentContainer = withRouter(connect(mapStateToProps)(SingleStudent))
+const SingleStudentContainer = withRouter(connect(mapStateToProps, mapDispatch)(SingleStudent))
 export default SingleStudentContainer

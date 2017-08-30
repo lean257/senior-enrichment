@@ -40,7 +40,7 @@ function Students (props) {
       ))
     }
     </table>
-    <div><Link to='/new-student'>Add a New Student</Link></div>
+    <button><Link to='/new-student'>Add Student</Link></button>
   </div>
   )
 }

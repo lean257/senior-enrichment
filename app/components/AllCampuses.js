@@ -25,6 +25,7 @@ function AllCampuses (props) {
           ))
         }
       </div>
+      <button><NavLink to={`/new-campus`}>Add Campus</NavLink></button>
     </div>
   )
 }

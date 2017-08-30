@@ -1,18 +1,5 @@
 import axios from 'axios'
-
-export const gotCampuses = campuses => ({type: 'GET_CAMPUSES', campuses})
-
-export function fetchCampuses() {
-  return function thunk (dispatch) {
-    return axios.get('/api/campuses')
-      .then(res => res.data)
-      .then(campuses => {
-        dispatch(gotCampuses(campuses))
-      })
-  }
-}
-
-export const getCampus = campus => ({type:'GET_CAMPUS', campus})
+import history from './history'
 
 export const getStudents = students => ({type: 'GET_STUDENTS', students})
 export const getStudent = student => ({type: 'GET_STUDENT', student})
@@ -39,7 +26,6 @@ export function deleteStudent(studentId) {
   }
 }
 
-export const addStudent = student => ({type: 'ADD_STUDENT', student})
 
 export function postStudent(student){
   return function thunk(dispatch){
@@ -47,6 +33,7 @@ export function postStudent(student){
     .then(res => res.data)
     .then(newStudent => {
       dispatch(getStudent(newStudent))
+      history.push(`/students/${newStudent.id}`)
     })
     .catch(console.error)
   }
