@@ -25,8 +25,7 @@ class SingleStudent extends Component {
 function mapStateToProps(state) {
   console.log('state inside SingleStudent', state)
   return {
-    students: state.students,
-    newStudent: state.newStudent
+    students: state.students
   }
 }
 const mapDispatch = null;

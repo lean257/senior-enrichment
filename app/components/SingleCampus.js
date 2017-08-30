@@ -3,6 +3,7 @@ import store from '../store'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
+import {deleteStudent} from '../reducers/students'
 
 function SingleCampus (props) {
   const students = props.students
@@ -16,6 +17,7 @@ function SingleCampus (props) {
       <tr>
       <th>#</th>
       <th>Name</th>
+      <th>Delete</th>
       </tr>
       </thead>
       {
@@ -25,6 +27,11 @@ function SingleCampus (props) {
               <th scope="row">{filteredStudents.indexOf(student)+1}</th>
               <td><Link className="thumbnail" to={`/students/${student.id}`}>{student.name}</Link>
               </td>
+              <td><button
+                className="delete"
+                value={student.id}
+                onClick={props.handleDelete}> X
+              </button></td>
             </tr>
           </tbody>
         ))
@@ -41,5 +48,13 @@ function mapStateToProps(state) {
   }
 }
 
-const AllStudentsContainer = withRouter(connect(mapStateToProps)(SingleCampus))
+const mapDispatch = dispatch => {
+  return {
+    handleDelete(evt){
+      dispatch(deleteStudent(Number(evt.target.getAttribute('value'))))
+    }
+  }
+}
+
+const AllStudentsContainer = withRouter(connect(mapStateToProps, mapDispatch)(SingleCampus))
 export default AllStudentsContainer

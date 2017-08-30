@@ -3,9 +3,11 @@ import history from '../history'
 
 const GET_CAMPUSES = 'GET_CAMPUSES'
 const GET_CAMPUS = 'GET_CAMPUS'
+const REMOVE_CAMPUS     = 'REMOVE_CAMPUS'
 
 export const getCampuses = campuses => ({type: 'GET_CAMPUSES', campuses})
 export const getCampus = campus => ({type: 'GET_CAMPUS', campus})
+const remove = id => ({ type: REMOVE_CAMPUS, id })
 
 const campusesReducer = function(state=[], action) {
   switch(action.type) {
@@ -13,6 +15,8 @@ const campusesReducer = function(state=[], action) {
       return action.campuses
     case GET_CAMPUS:
       return [...state, action.campus]
+    case REMOVE_CAMPUS:
+      return campuses.filter(campus => campus.student_id !== action.id);
     default: return state
   }
 }
@@ -45,6 +49,13 @@ export function postCampus(campus){
     .catch(console.error)
   }
 }
+
+export const removeCampus = id => dispatch => {
+  dispatch(remove(id));
+  axios.delete(`/api/campuses/${id}`)
+       .catch(err => console.error(`Removing campus: ${id} unsuccessful`, err));
+}
+
 
 // import axios from 'axios';
 // import {REMOVE as REMOVE_STUDENT} from './students'

@@ -7,9 +7,11 @@ import NewStudentEntry from './NewStudentEntry'
 import NewCampusEntry from './NewCampusEntry'
 import NavBar from './NavBar'
 import store from '../store'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
+import {Router} from 'react-router'
 import {fetchStudents} from '../reducers/students'
 import {fetchCampuses} from '../reducers/campuses'
+import history from '../history'
 
 export default class Main extends Component {
 
@@ -20,7 +22,7 @@ export default class Main extends Component {
 
   render () {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <NavBar />
           <main>
