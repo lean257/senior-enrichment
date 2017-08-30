@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AllCampuses from './AllCampuses'
 import Students from './Students'
-import SingleStudent from './SingleStudent'
+import StudentDetail from './StudentDetail'
 import SingleCampus from './SingleCampus'
 import NewStudentEntry from './NewStudentEntry'
 import NewCampusEntry from './NewCampusEntry'
@@ -23,13 +23,13 @@ export default class Main extends Component {
   render () {
     return (
       <Router history={history}>
-        <div>
+        <div id="main" className="container-fluid">
           <NavBar />
           <main>
             <Switch>
               <Route exact path="/" component={AllCampuses} />
               <Route exact path="/students" component={Students} />
-              <Route path="/students/:studentId" component={SingleStudent} />
+              <Route path="/students/:studentId" component={StudentDetail} />
               <Route path="/campuses/:campusId" component={SingleCampus} />
               <Route path="/new-student" component={NewStudentEntry} />
               <Route path="/new-campus" component={NewCampusEntry} />

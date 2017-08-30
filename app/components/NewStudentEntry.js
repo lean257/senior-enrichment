@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {addStudent} from '../reducers/NewStudentEntry'
-import {getStudent, postStudent} from '../reducers/students'
+import {addStudent} from '../reducers/students'
 import {withRouter} from 'react-router'
 import store from '../store'
 
@@ -13,78 +12,73 @@ class NewStudentEntry extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    const name = evt.target.studentName.value
-    const email = evt.target.studentEmail.value
-    const img = evt.target.studentPic.value || 'https://s-media-cache-ak0.pinimg.com/736x/49/31/d2/4931d228854f9b9ef6158cde2515e752--mini-yorkie-adorable-puppies.jpg'
-    const campusName = evt.target.studentCampus.value
-    const selectedCampusId = this.props.campuses.filter(campus => campus.name === campusName)[0].id || 1
-    store.dispatch(postStudent({
-      name: name,
-      campusId: selectedCampusId,
-      email: email,
-      image: img
-    }))
-    evt.target.studentName.value = ''
+    const name = evt.target.name.value
+    const email = evt.target.email.value
+    const image = evt.target.picture.value || 'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/90.png'
+    const campusName = evt.target.campus.value
+    const campusId = this.props.campuses.filter(campus => campus.name === campusName)[0].id || 1
+    this.props.addStudent({name, email, image, campusId})
+    evt.target.name.value = ''
+    evt.target.email.value = ''
+    evt.target.campus.value = ''
   }
   render(){
     const {newStudent} = this.props
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-        <label htmlFor="name">Add a New Student</label>
-          <input
-          className="form-control"
-          type="text"
-          name="studentName"
-          placeholder="Enter student name"
-          value={this.props.newStudent}
-          onChange={this.props.handleChangeInput}
-          />
-          <input
-          className="form-control"
-          type="text"
-          name="studentEmail"
-          placeholder="Enter student email"
-          value={newStudent.email}
-          />
-          <input
-          className="form-control"
-          type="text"
-          name="studentPic"
-          placeholder="Enter student picture Url"
-          value={newStudent.image}
-          />
-        <select name="studentCampus">
-          {
-            this.props.campuses.map(campus => (
-              <option value={campus.name} key={campus.id}>{campus.name}</option>
-            ))
-          }
-          </select>
+      <div className="list-group-item min-content user-item">
+        <form className="media" onSubmit={this.handleSubmit}>
+          <div className="media-left media-middle icon-container">
+            <button
+              type="submit"
+              className="glyphicon glyphicon-plus clickable"
+            />
+          </div>
+          <div className="media-body">
+            <h4 className="media-heading tucked">
+              <input
+                name="name"
+                type="text"
+                required
+                placeholder="Jean Doe"
+                className="form-like"
+              />
+            </h4>
+            <h5 className="tucked">
+              <input
+                name="email"
+                type="email"
+                placeholder="email@website.com"
+                className="form-like"
+              />
+            </h5>
+            <h5 className="tucked">
+              <input
+                name="picture"
+                type="picture"
+                placeholder="pic URL"
+                className="form-like"
+              />
+            </h5>
+            <h5>
+              <select name="campus">
+                {
+                  this.props.campuses.map(campus => (
+                    <option value={campus.name} key={campus.id}>{campus.name}</option>
+                  ))
+                }
+              </select>
+            </h5>
+            </div>
+          </form>
         </div>
-        <div className="form-group">
-          <button type="submit" className="btn btn-default">Add</button>
-        </div>
-      </form>
     )
   }
 }
 
-function mapStateToProps(state){
-  return {
-    newStudent: state.newStudent,
-    campuses: state.campuses
-  }
-}
+const mapState = ({ students, campuses }) => ({ students, campuses })
 
-function mapDispatchToProps(dispatch, ownProps){
-  return {
-    handleChangeInput(evt) {
-      dispatch(addStudent(evt.target.value))
-    }
-  }
-}
+const mapDispatch = {addStudent}
 
-const NewStudentEntryContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(NewStudentEntry))
+const NewStudentEntryContainer = withRouter(connect(mapState, mapDispatch)(NewStudentEntry))
 
 export default NewStudentEntryContainer

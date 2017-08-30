@@ -4,6 +4,9 @@ import history from '../history'
 const GET_STUDENTS = 'GET_STUDENTS'
 const GET_STUDENT = 'GET_STUDENT'
 const DELETE_STUDENT = 'DELETE_STUDENT'
+const CREATE     = 'CREATE_USER'
+
+const create = student  => ({ type: CREATE, student });
 
 const studentsReducer = function(state=[], action) {
   switch(action.type) {
@@ -16,6 +19,8 @@ const studentsReducer = function(state=[], action) {
       const indexOfStudentToDelete = state.findIndex(student => student.id === action.studentId)
       newState.splice(indexOfStudentToDelete, 1)
       return newState
+    case CREATE:
+      return [action.student, ...state];
     default: return state
   }
 }
@@ -58,4 +63,10 @@ export function postStudent(student){
     })
     .catch(console.error)
   }
+}
+
+export const addStudent = student => dispatch => {
+  axios.post('/api/students', student)
+       .then(res => dispatch(create(res.data)))
+       .catch(err => console.error(`Creating user: ${student} unsuccesful`, err))
 }

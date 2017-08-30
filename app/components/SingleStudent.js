@@ -2,33 +2,64 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import React, {Component} from 'react'
 import {withRouter} from 'react-router'
+import {deleteStudent} from '../reducers/students'
 
 class SingleStudent extends Component {
   constructor(props){
     super(props)
+    this.removeStudent = this.removeStudent.bind(this)
   }
   render() {
-    const students = this.props.students
-    const studentId = Number(this.props.match.params.studentId)
-    const filteredStudent = students.filter(student => student.id === studentId)[0]
+    const { student, campuses } = this.props
+    // const studentId = Number(this.props.match.params.studentId)
+    // const student = students.filter(student => student.id === studentId)[0]
 
     return (
-      <div>
-        <img className="media-object" src={filteredStudent.image} alt="image" height="92" width="92"/> <br />
-        { filteredStudent.name } <br />
-      { filteredStudent.email }
-    </div>
-    )
+      <div className="list-group-item min-content students-item">
+        <div className="media">
+          <div className="media-left media-middle icon-container">
+            <img className="media-object img-circle" src={student.image} />
+          </div>
+          <NavLink
+            className="media-body"
+            activeClassName="active"
+            to={`/students/${student.id}`}>
+            <h4 className="media-heading tucked">
+              <span placeholder="Jean Doe">{student.name}</span>
+            </h4>
+            <h5 className="tucked">
+              <span>{student.email}</span>
+            </h5>
+            <h5 className="tucked">
+              <span>{campuses && campuses.filter(campus => campus.id === student.campusId)[0].name}</span>
+            </h5>
+          </NavLink>
+          <div className="media-right media-middle">
+            <button
+                className="btn btn-default"
+                onClick={this.removeStudent}
+                value={student.id}>
+              <span className="glyphicon glyphicon-remove" /> X
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  removeStudent (event) {
+    const { deleteStudent } = this.props;
+    event.stopPropagation();
+    deleteStudent(Number(event.target.getAttribute('value')))
   }
 }
 
 function mapStateToProps(state) {
-  console.log('state inside SingleStudent', state)
   return {
-    students: state.students
+    students: state.students,
+    campuses: state.campuses
   }
 }
-const mapDispatch = null;
+const mapDispatch = {deleteStudent};
 
 const SingleStudentContainer = withRouter(connect(mapStateToProps, mapDispatch)(SingleStudent))
 export default SingleStudentContainer
