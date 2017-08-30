@@ -1,59 +1,62 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getCampus, postCampus} from '../reducers/campuses'
-import {addCampus} from '../reducers/NewCampusEntry'
-import { withRouter } from 'react-router'
+import {addCampus} from '../reducers/campuses'
+import {withRouter} from 'react-router'
 import store from '../store'
 
-class NewCampusEntry extends Component {
+class NewStudentEntry extends Component {
   constructor(props) {
     super(props)
-  }
-  render(){
-    const {newCampus} = this.props
-    return(
-      <form onSubmit={this.props.handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="name">Add a New Campus</label>
-          <input
-          className="form-control"
-          type="text"
-          name="campusName"
-          placeholder="Enter campus name"
-          value={newCampus}
-          onChange={this.props.handleChangeInput}
-          />
-          <input
-          className="form-control"
-          type="text"
-          name="campusPic"
-          placeholder="Enter campus picture Url"
-          value={newCampus.image}
-          />
-      </div>
-      <div className="form-group">
-        <button type="submit" className="btn btn-default">Add</button>
-      </div>
-      </form>
-    )
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-}
-
-const mapState = ({ campuses, newCampus }) => ({ campuses, newCampus })
-const mapDispatch = (dispatch) => ({
-  handleChangeInput(evt) {
-    dispatch(addCampus(evt.target.value))
-  },
   handleSubmit(evt) {
     evt.preventDefault()
-    const campusName = evt.target.campusName.value
-    const campusImg = evt.target.campusPic.value || 'https://cdn2.iconfinder.com/data/icons/bubble-education-icons-1/360/Ruler_and_Pencil-512.png'
-    store.dispatch(postCampus({
-      name: campusName,
-      image: campusImg
-    }))
-    evt.target.campusName.value = ''
+    const name = evt.target.name.value
+    const image = evt.target.picture.value || 'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/91.png'
+    this.props.addCampus({name, image})
+    evt.target.name.value = ''
+    evt.target.picture.value = ''
   }
-})
-export default withRouter(connect(mapState, mapDispatch)(NewCampusEntry))
+  render(){
+    return (
+      <div className="list-group-item min-content user-item">
+        <form className="media" onSubmit={this.handleSubmit}>
+          <div className="media-left media-middle icon-container">
+            <button
+              type="submit"
+              className="glyphicon glyphicon-plus clickable"
+            />
+          </div>
+          <div className="media-body">
+            <h4 className="media-heading tucked">
+              <input
+                name="name"
+                type="text"
+                required
+                placeholder="Grace Hopper"
+                className="form-like"
+              />
+            </h4>
+            <h5 className="tucked">
+              <input
+                name="picture"
+                type="picture"
+                placeholder="Campus Image"
+                className="form-like"
+              />
+            </h5>
+            </div>
+          </form>
+        </div>
+    )
+  }
+}
+
+const mapState = ({ students, campuses }) => ({ students, campuses })
+
+const mapDispatch = {addCampus}
+
+const NewStudentEntryContainer = withRouter(connect(mapState, mapDispatch)(NewStudentEntry))
+
+export default NewStudentEntryContainer

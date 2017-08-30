@@ -2,21 +2,21 @@ import axios from 'axios'
 import history from '../history'
 
 const GET_CAMPUSES = 'GET_CAMPUSES'
-const GET_CAMPUS = 'GET_CAMPUS'
-const REMOVE_CAMPUS     = 'REMOVE_CAMPUS'
+const REMOVE_CAMPUS  = 'REMOVE_CAMPUS'
+const CREATE     = 'CREATE_CAMPUS'
 
 export const getCampuses = campuses => ({type: 'GET_CAMPUSES', campuses})
-export const getCampus = campus => ({type: 'GET_CAMPUS', campus})
 const remove = id => ({ type: REMOVE_CAMPUS, id })
+const create = campus  => ({ type: CREATE, campus });
 
 const campusesReducer = function(state=[], action) {
   switch(action.type) {
     case GET_CAMPUSES:
       return action.campuses
-    case GET_CAMPUS:
-      return [...state, action.campus]
     case REMOVE_CAMPUS:
-      return campuses.filter(campus => campus.student_id !== action.id);
+      return state.filter(campus => campus.id !== action.id);
+    case CREATE:
+      return [action.campus, ...state];
     default: return state
   }
 }
@@ -35,27 +35,17 @@ export function fetchCampuses() {
   }
 }
 
-//request to server
-export function postCampus(campus){
-  // console.log('campus inside postCampus', campus)
-  return function thunk(dispatch){
-    return axios.post('api/campuses', campus)
-    .then(res => res.data)
-    .then(newCampus => {
-      // console.log('newCampus inside axios', newCampus)
-      dispatch(getCampus(newCampus))
-      history.push(`/campuses/${newCampus.id}`)
-    })
-    .catch(console.error)
-  }
-}
-
 export const removeCampus = id => dispatch => {
   dispatch(remove(id));
   axios.delete(`/api/campuses/${id}`)
        .catch(err => console.error(`Removing campus: ${id} unsuccessful`, err));
 }
 
+export const addCampus = campus => dispatch => {
+  axios.post('/api/campuses', campus)
+       .then(res => dispatch(create(res.data)))
+       .catch(err => console.error(`Creating campus: ${campus} unsuccesful`, err))
+}
 
 // import axios from 'axios';
 // import {REMOVE as REMOVE_STUDENT} from './students'

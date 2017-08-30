@@ -3,40 +3,37 @@ import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
 import {removeCampus} from '../reducers/campuses'
+import NewCampusEntry from './NewCampusEntry'
+import SingleCampus from './SingleCampus'
 
-function AllCampuses (props) {
-  const campuses = props.campuses
+class AllCampuses extends Component {
+  constructor(props) {
+    super(props)
+  }
 
-  return (
-    <div>
-      <h3>Campuses</h3>
-      <div className="row">
-        {
-          campuses && campuses.map(campus => (
-            <div className="col-xs-4" key={ campus.id }>
-              <NavLink className="thumbnail" to={`/campuses/${campus.id}`}>
-                <img src={ campus.image } height="92" width="92"/>
-                <div className="caption">
-                  <h5>
-                    <span>{ campus.name }</span>
-                  </h5>
-                </div>
-              </NavLink>
-            </div>
-          ))
-        }
+  render(){
+    const {campuses} = this.props
+    return (
+      <div className="container">
+        <div className="user-query">
+          <NewCampusEntry />
+        </div>
+        <br />
+        <br />
+        <div className="user-list">
+          {
+            campuses.map(campus => {
+              return (<SingleCampus campus={campus} key={campus.id} />)
+            })
+          }
+        </div>
       </div>
-      <button><NavLink to={`/new-campus`}>Add Campus</NavLink></button>
-    </div>
-  )
-}
-
-function mapStateToProps(state) {
-  return {
-    campuses: state.campuses
+    )
   }
 }
+
+const mapState = ({campuses}) => ({campuses})
 const mapDispatch = { removeCampus };
 
-const AllCampusesContainer = withRouter(connect(mapStateToProps, mapDispatch)(AllCampuses))
+const AllCampusesContainer = withRouter(connect(mapState, mapDispatch)(AllCampuses))
 export default AllCampusesContainer

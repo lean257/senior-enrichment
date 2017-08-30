@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import AllCampuses from './AllCampuses'
 import Students from './Students'
 import StudentDetail from './StudentDetail'
-import SingleCampus from './SingleCampus'
+import CampusDetail from './CampusDetail'
 import NewStudentEntry from './NewStudentEntry'
 import NewCampusEntry from './NewCampusEntry'
 import NavBar from './NavBar'
@@ -30,7 +30,7 @@ export default class Main extends Component {
               <Route exact path="/" component={AllCampuses} />
               <Route exact path="/students" component={Students} />
               <Route path="/students/:studentId" component={StudentDetail} />
-              <Route path="/campuses/:campusId" component={SingleCampus} />
+              <Route path="/campuses/:campusId" component={CampusDetail} />
               <Route path="/new-student" component={NewStudentEntry} />
               <Route path="/new-campus" component={NewCampusEntry} />
             </Switch>

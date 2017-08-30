@@ -23,7 +23,6 @@ class NewStudentEntry extends Component {
     evt.target.campus.value = ''
   }
   render(){
-    const {newStudent} = this.props
     return (
       <div className="list-group-item min-content user-item">
         <form className="media" onSubmit={this.handleSubmit}>

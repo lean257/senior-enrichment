@@ -11,8 +11,6 @@ class SingleStudent extends Component {
   }
   render() {
     const { student, campuses } = this.props
-    // const studentId = Number(this.props.match.params.studentId)
-    // const student = students.filter(student => student.id === studentId)[0]
 
     return (
       <div className="list-group-item min-content students-item">
@@ -53,13 +51,8 @@ class SingleStudent extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    students: state.students,
-    campuses: state.campuses
-  }
-}
+const mapState = ({students, campuses}) => ({students, campuses})
 const mapDispatch = {deleteStudent};
 
-const SingleStudentContainer = withRouter(connect(mapStateToProps, mapDispatch)(SingleStudent))
+const SingleStudentContainer = withRouter(connect(mapState, mapDispatch)(SingleStudent))
 export default SingleStudentContainer

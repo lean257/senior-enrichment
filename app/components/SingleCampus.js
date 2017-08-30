@@ -1,60 +1,51 @@
-import React, {Component} from 'react'
-import store from '../store'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
+import React, {Component} from 'react'
 import {withRouter} from 'react-router'
-import {Link} from 'react-router-dom'
-import {deleteStudent} from '../reducers/students'
+import {removeCampus} from '../reducers/campuses'
 
-function SingleCampus (props) {
-  const students = props.students
-  const campusId = Number(props.match.params.campusId)
-  const filteredStudents = students.filter(students => students.campusId === campusId);
-
-  return (
-    <div>
-    <table className="table">
-      <thead>
-      <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Delete</th>
-      </tr>
-      </thead>
-      {
-        filteredStudents && filteredStudents.map(student => (
-          <tbody key={student.id}>
-            <tr>
-              <th scope="row">{filteredStudents.indexOf(student)+1}</th>
-              <td><Link className="thumbnail" to={`/students/${student.id}`}>{student.name}</Link>
-              </td>
-              <td><button
-                className="delete"
-                value={student.id}
-                onClick={props.handleDelete}> X
-              </button></td>
-            </tr>
-          </tbody>
-        ))
-      }
-    </table>
-    <button><Link to='/new-student'>Add Student</Link></button>
-    </div>
-  )
-}
-
-function mapStateToProps(state) {
-  return {
-    students: state.students
+class SingleStudent extends Component {
+  constructor(props){
+    super(props)
+    this.removeCampus = this.removeCampus.bind(this)
+  }
+  render() {
+    const { campus } = this.props
+    return (
+      <div className="list-group-item min-content students-item">
+        <div className="media">
+          <div className="media-left media-middle icon-container">
+            <img className="media-object img-circle" src={campus.image} height="120" width="120"/>
+          </div>
+          <NavLink
+            className="media-body"
+            activeClassName="active"
+            to={`/campuses/${campus.id}`}>
+            <h4 className="media-heading tucked">
+              <span placeholder="Grace Hopper">{campus.name}</span>
+            </h4>
+          </NavLink>
+          <div className="media-right media-middle">
+            <button
+                className="btn btn-default"
+                onClick={this.removeCampus}
+                value={campus.id}>
+              <span className="glyphicon glyphicon-remove" /> X
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  removeCampus (event) {
+    const { removeCampus } = this.props;
+    event.stopPropagation();
+    removeCampus(Number(event.target.getAttribute('value')))
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleDelete(evt){
-      dispatch(deleteStudent(Number(evt.target.getAttribute('value'))))
-    }
-  }
-}
+const mapState = ({students, campuses}) => ({students, campuses})
+const mapDispatch = {removeCampus};
 
-const AllStudentsContainer = withRouter(connect(mapStateToProps, mapDispatch)(SingleCampus))
-export default AllStudentsContainer
+const SingleStudentContainer = withRouter(connect(mapState, mapDispatch)(SingleStudent))
+export default SingleStudentContainer
