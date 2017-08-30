@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {addStudent} from '../reducers/NewStudentEntry'
-import {getStudent, postStudent} from '../actions'
+import {getStudent, postStudent} from '../reducers/students'
 import {withRouter} from 'react-router'
 import store from '../store'
 

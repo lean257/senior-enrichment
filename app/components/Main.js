@@ -8,7 +8,7 @@ import NewCampusEntry from './NewCampusEntry'
 import NavBar from './NavBar'
 import store from '../store'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {fetchStudents} from '../actions'
+import {fetchStudents} from '../reducers/students'
 import {fetchCampuses} from '../reducers/campuses'
 
 export default class Main extends Component {
