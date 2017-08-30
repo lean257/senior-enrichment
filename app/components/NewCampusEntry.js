@@ -53,8 +53,7 @@ const mapDispatch = (dispatch) => ({
       name: campusName,
       image: campusImg
     }))
-    store.dispatch(addCampus(''))
-    // this.props.history.push(`/campuses/${this.props.newCampus.id}`)
+    evt.target.campusName.value = ''
   }
 })
 export default withRouter(connect(mapState, mapDispatch)(NewCampusEntry))

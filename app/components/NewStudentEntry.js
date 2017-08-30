@@ -24,7 +24,7 @@ class NewStudentEntry extends Component {
       email: email,
       image: img
     }))
-    store.dispatch(addStudent(''))
+    evt.target.studentName.value = ''
   }
   render(){
     const {newStudent} = this.props
