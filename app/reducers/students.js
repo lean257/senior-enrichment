@@ -3,11 +3,13 @@ import history from '../history'
 
 const GET_STUDENTS = 'GET_STUDENTS'
 const DELETE_STUDENT = 'DELETE_STUDENT'
-const CREATE     = 'CREATE_USER'
+const CREATE     = 'CREATE_STUDENT'
+const UPDATE     = 'UPDATE_CAMPUS'
 
+const update = student   => ({ type: UPDATE, student })
 const create = student  => ({ type: CREATE, student });
-export const deleteStudentSuccess = studentId => ({type: 'DELETE_STUDENT', studentId})
-export const getStudents = students => ({type: 'GET_STUDENTS', students})
+const deleteStudentSuccess = studentId => ({type: 'DELETE_STUDENT', studentId})
+const getStudents = students => ({type: 'GET_STUDENTS', students})
 
 const studentsReducer = function(state=[], action) {
   switch(action.type) {
@@ -19,7 +21,12 @@ const studentsReducer = function(state=[], action) {
       newState.splice(indexOfStudentToDelete, 1)
       return newState
     case CREATE:
-      return [action.student, ...state];
+      return [action.student, ...state]
+    case UPDATE:
+      return [
+        ...state.filter(student => student.id !== action.student.id),
+        Object.assign({}, action.student)
+      ]
     default: return state
   }
 }
@@ -50,4 +57,11 @@ export const addStudent = student => dispatch => {
   axios.post('/api/students', student)
        .then(res => dispatch(create(res.data)))
        .catch(err => console.error(`Creating user: ${student} unsuccesful`, err))
+}
+export const updateStudent = (id, student) => dispatch => {
+  axios.put(`/api/campuses/${id}`, student)
+       .then(res => {
+         dispatch(update(res.data))
+       })
+       .catch(err => console.error(`Updating student: ${student} unsuccessful`, err))
 }

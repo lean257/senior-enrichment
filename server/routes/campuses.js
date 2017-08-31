@@ -30,9 +30,20 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
-router.put('/:campusId', (req, res, next) => {
+router.get('/:campusId', (req, res, next) => {
   Campus.findById(req.params.campusId)
-  .then(campus => campus.update(req.body))
+  .then(campus => res.json(campus))
+  .catch(next)
+})
+
+router.put('/:campusId', (req, res, next) => {
+  Campus.update(
+    req.body,
+    {where: {id: req.params.campusId},
+    returning: true})
+  .then(result => {
+    res.status(200).json(result[1][0])
+  })
   .catch(next)
 })
 

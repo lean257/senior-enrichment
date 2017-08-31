@@ -9,25 +9,32 @@ class SingleCampus extends Component {
   constructor(props){
     super(props)
     this.state = {
-      isEditing: false
+      isEditing: false,
+      name: this.props.campus.name,
+      image: this.props.campus.image
     }
     this.removeCampus = this.removeCampus.bind(this)
     this.doneEdit = this.doneEdit.bind(this)
     this.clickEdit = this.clickEdit.bind(this)
     this.cancelEdit = this.cancelEdit.bind(this)
+    this.updateCampusName = this.updateCampusName.bind(this)
+    this.updateCampusImage = this.updateCampusImage.bind(this)
   }
+
   render() {
+    const { campus } = this.props
     if (this.state.isEditing) {
       return (
         <div className="list-group-item min-content user-item">
-          <form className="media" onSubmit={this.doneEdit}>
+          <form className="media">
             <div className="media-left media-middle icon-container">
               <button
                 type="submit"
                 className="clickable"
-              >Done</button>
+                onClick={this.doneEdit}
+              >Save</button>
               <button
-                type="submit"
+                type="cancel"
                 className="clickable"
                 onClick={this.cancelEdit}
               >Cancel</button>
@@ -38,16 +45,18 @@ class SingleCampus extends Component {
                   name="name"
                   type="text"
                   required
-                  placeholder="Grace Hopper"
                   className="form-like"
+                  value={this.state.name}
+                  onChange={this.updateCampusName}
                 />
               </h4>
               <h5 className="tucked">
                 <input
                   name="picture"
-                  type="picture"
-                  placeholder="Campus Image"
+                  type="text"
                   className="form-like"
+                  value={this.state.image}
+                  onChange={this.updateCampusImage}
                 />
               </h5>
               </div>
@@ -55,7 +64,7 @@ class SingleCampus extends Component {
           </div>
       )
     }
-    const { campus } = this.props
+
     return (
       <div className="list-group-item min-content students-item">
         <div className="media">
@@ -98,12 +107,22 @@ class SingleCampus extends Component {
   clickEdit(event) {
     this.setState({isEditing: true})
   }
+  updateCampusName(event) {
+    const name = event.target.value
+    return this.setState({name})
+  }
+  updateCampusImage(event) {
+    const image = event.target.value
+    return this.setState({image})
+  }
   doneEdit(event) {
-    const {campus} = this.props
-    const name = event.target.name.value
-    const image = event.target.image.value
-    const updatedCampus = {name, image}
-    updateCampus(campus.id, campus)
+    const {campus, updateCampus} = this.props
+    event.preventDefault()
+    updateCampus(campus.id, {
+      name: this.state.name,
+      image: this.state.image
+    })
+    this.setState({isEditing: false})
   }
   cancelEdit(event) {
     this.setState({isEditing: false})

@@ -7,11 +7,19 @@ import {deleteStudent} from '../reducers/students'
 class SingleStudent extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      isEditing: false
+    }
     this.removeStudent = this.removeStudent.bind(this)
+    // this.doneEdit = this.doneEdit.bind(this)
+    // this.clickEdit = this.clickEdit.bind(this)
+    // this.cancelEdit = this.cancelEdit.bind(this)
   }
   render() {
     const { student, campuses } = this.props
-
+    // if (this.state.isEditing) {
+    //   return
+    // }
     return (
       <div className="list-group-item min-content students-item">
         <div className="media">
@@ -46,9 +54,11 @@ class SingleStudent extends Component {
   }
   removeStudent (event) {
     const { student, deleteStudent } = this.props;
-    event.stopPropagation();
-    // deleteStudent(Number(event.target.getAttribute('value')))
+    event.stopPropagation()
     deleteStudent(student.id)
+  }
+  clickEdit(event) {
+    this.setState({isEditing: true})
   }
 }
 

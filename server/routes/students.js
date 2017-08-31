@@ -33,9 +33,13 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:studentId', (req, res, next) => {
-  Student.findById(req.params.studentId)
-  .then(student => student.update(req.body))
-  .then(() => res.sendStatus(204))
+  Student.update(
+    req.body,
+    {where: {id: req.params.studentId},
+    returning: true})
+  .then(result => {
+    res.status(200).json(result[1][0])
+  })
   .catch(next)
 })
 

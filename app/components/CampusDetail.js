@@ -18,6 +18,7 @@ class CampusDetail extends React.Component {
     if (!campus) return <div />
     return (
       <div className="container">
+        <h1>{campus.name}</h1>
         <div className="user-query">
           <NewStudentEntry SelectedCampus={campus}/>
         </div>
