@@ -30,12 +30,10 @@ class SingleCampus extends Component {
             <div className="media-left media-middle icon-container">
               <button
                 type="submit"
-                className="clickable"
                 onClick={this.doneEdit}
               >Save</button>
               <button
                 type="cancel"
-                className="clickable"
                 onClick={this.cancelEdit}
               >Cancel</button>
             </div>
@@ -84,7 +82,7 @@ class SingleCampus extends Component {
                 className="btn btn-default"
                 onClick={this.removeCampus}
                 value={campus.id}>
-              <span className="glyphicon glyphicon-remove" /> X
+              <span className="glyphicon glyphicon-remove" />
             </button>
           </div>
           <div className="media-right media-middle">
@@ -92,7 +90,7 @@ class SingleCampus extends Component {
                 className="btn btn-default"
                 onClick={this.clickEdit}
                 value={campus.id}>
-              <span className="glyphicon glyphicon-remove" /> Edit
+              <span className="glyphicon glyphicon-edit" />
             </button>
           </div>
         </div>
@@ -125,7 +123,7 @@ class SingleCampus extends Component {
     this.setState({isEditing: false})
   }
   cancelEdit(event) {
-    this.setState({isEditing: false})
+    return this.setState({isEditing: false})
   }
 }
 

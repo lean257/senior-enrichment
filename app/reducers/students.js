@@ -4,7 +4,7 @@ import history from '../history'
 const GET_STUDENTS = 'GET_STUDENTS'
 const DELETE_STUDENT = 'DELETE_STUDENT'
 const CREATE     = 'CREATE_STUDENT'
-const UPDATE     = 'UPDATE_CAMPUS'
+const UPDATE     = 'UPDATE_STUDENT'
 
 const update = student   => ({ type: UPDATE, student })
 const create = student  => ({ type: CREATE, student });
@@ -59,8 +59,9 @@ export const addStudent = student => dispatch => {
        .catch(err => console.error(`Creating user: ${student} unsuccesful`, err))
 }
 export const updateStudent = (id, student) => dispatch => {
-  axios.put(`/api/campuses/${id}`, student)
+  axios.put(`/api/students/${id}`, student)
        .then(res => {
+         console.log('res.data inside axios', res.data)
          dispatch(update(res.data))
        })
        .catch(err => console.error(`Updating student: ${student} unsuccessful`, err))
