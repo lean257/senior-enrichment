@@ -78,7 +78,10 @@ select {
 .navbar {
   border: none;
   border-radius: 0;
-  border-bottom: 1px dotted #777; }
+  border-bottom: 1px dotted #777;
+  text-align: center;
+  font-size: 1.5em;
+}
   .navbar .navbar-nav a.active {
     background: transparent;
     position: relative; }
