@@ -45,9 +45,10 @@ class SingleStudent extends Component {
     );
   }
   removeStudent (event) {
-    const { deleteStudent } = this.props;
+    const { student, deleteStudent } = this.props;
     event.stopPropagation();
-    deleteStudent(Number(event.target.getAttribute('value')))
+    // deleteStudent(Number(event.target.getAttribute('value')))
+    deleteStudent(student.id)
   }
 }
 

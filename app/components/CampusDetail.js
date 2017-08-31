@@ -19,7 +19,7 @@ class CampusDetail extends React.Component {
     return (
       <div className="container">
         <div className="user-query">
-          <NewStudentEntry />
+          <NewStudentEntry SelectedCampus={campus}/>
         </div>
         <br />
         <br />

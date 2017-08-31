@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {withRouter} from 'react-router'
-import {deleteStudent} from '../reducers/students'
-import {addStudent} from '../reducers/NewStudentEntry'
 import SingleStudent from './SingleStudent'
 import NewStudentEntry from './NewStudentEntry'
 
@@ -30,20 +28,8 @@ class Students extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    students: state.students,
-    campuses: state.campuses
-  }
-}
+const mapStateToProps = ({students, campuses}) => ({students, campuses})
 
-function mapDispatchToProps(dispatch, ownProps){
-  return {
-    handleDelete(evt){
-      dispatch(deleteStudent(Number(evt.target.getAttribute('value'))))
-    }
-  }
-}
 //in order to use connect can it be a class or it needs to be a function?
-const StudentsContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Students))
+const StudentsContainer = withRouter(connect(mapStateToProps)(Students))
 export default StudentsContainer

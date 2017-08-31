@@ -4,7 +4,7 @@ import {addCampus} from '../reducers/campuses'
 import {withRouter} from 'react-router'
 import store from '../store'
 
-class NewStudentEntry extends Component {
+class NewCampusEntry extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -13,7 +13,7 @@ class NewStudentEntry extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
     const name = evt.target.name.value
-    const image = evt.target.picture.value || 'https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/91.png'
+    const image = evt.target.picture.value || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_hMiLX5coE1NDUpnmS2sILZj-h0qgFTM4A9w-47ibusjWoU_q'
     this.props.addCampus({name, image})
     evt.target.name.value = ''
     evt.target.picture.value = ''
@@ -57,6 +57,4 @@ const mapState = ({ students, campuses }) => ({ students, campuses })
 
 const mapDispatch = {addCampus}
 
-const NewStudentEntryContainer = withRouter(connect(mapState, mapDispatch)(NewStudentEntry))
-
-export default NewStudentEntryContainer
+export default withRouter(connect(mapState, mapDispatch)(NewCampusEntry))

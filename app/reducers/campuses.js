@@ -4,19 +4,25 @@ import history from '../history'
 const GET_CAMPUSES = 'GET_CAMPUSES'
 const REMOVE_CAMPUS  = 'REMOVE_CAMPUS'
 const CREATE     = 'CREATE_CAMPUS'
+const UPDATE     = 'UPDATE_STORY'
 
-export const getCampuses = campuses => ({type: 'GET_CAMPUSES', campuses})
+const getCampuses = campuses => ({type: 'GET_CAMPUSES', campuses})
 const remove = id => ({ type: REMOVE_CAMPUS, id })
-const create = campus  => ({ type: CREATE, campus });
+const create = campus  => ({ type: CREATE, campus })
+const update = campus   => ({ type: UPDATE, campus })
 
 const campusesReducer = function(state=[], action) {
   switch(action.type) {
     case GET_CAMPUSES:
       return action.campuses
     case REMOVE_CAMPUS:
-      return state.filter(campus => campus.id !== action.id);
+      return state.filter(campus => campus.id !== action.id)
     case CREATE:
-      return [action.campus, ...state];
+      return [action.campus, ...state]
+    case UPDATE:
+      return state.map(campus => (
+        action.campus.id === campus.id ? action.campus : campus
+      ))
     default: return state
   }
 }
@@ -45,6 +51,12 @@ export const addCampus = campus => dispatch => {
   axios.post('/api/campuses', campus)
        .then(res => dispatch(create(res.data)))
        .catch(err => console.error(`Creating campus: ${campus} unsuccesful`, err))
+}
+
+export const updateCampus = (id, campus) => dispatch => {
+  axios.put(`/api/campuses/${id}`, campus)
+       .then(res => dispatch(update(res.data)))
+       .catch(err => console.error(`Updating campus: ${campus} unsuccessful`, err))
 }
 
 // import axios from 'axios';

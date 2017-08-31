@@ -23,6 +23,7 @@ class NewStudentEntry extends Component {
     evt.target.campus.value = ''
   }
   render(){
+    const {SelectedCampus} = this.props
     return (
       <div className="list-group-item min-content user-item">
         <form className="media" onSubmit={this.handleSubmit}>
@@ -61,8 +62,9 @@ class NewStudentEntry extends Component {
             <h5>
               <select name="campus">
                 {
+                  SelectedCampus ? <option>{SelectedCampus.name}</option> :
                   this.props.campuses.map(campus => (
-                    <option value={campus.name} key={campus.id}>{campus.name}</option>
+                    <option key={campus.id}>{campus.name}</option>
                   ))
                 }
               </select>
